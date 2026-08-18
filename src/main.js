@@ -121,8 +121,7 @@ async function loadAdmin(){
         <td>${hm(mins(x.clock_in,x.clock_out,b))}</td>
         <td>${gpsCell(x.clock_in_latitude,x.clock_in_longitude,x.clock_in_accuracy)}</td>
         <td>${gpsCell(x.clock_out_latitude,x.clock_out_longitude,x.clock_out_accuracy)}</td>
-        <td><button class="save gray small" data-id="${x.id}">保存</button></td>
-      </tr>`;
+        <td><button class="save gray small" data-id="${x.id}">保存</button></td><button class="cancel gray small" data-id="${x.id}">取消</button>
     }).join("")||`<tr><td colspan="8">該当する勤怠データがありません。</td></tr>`}
   </table></div>`;
   document.querySelectorAll(".save").forEach(b=>b.onclick=async()=>{
@@ -137,6 +136,30 @@ async function loadAdmin(){
     if(r.error)alert(r.error.message);else loadAdmin();
   });
 }
+
+
+document.querySelectorAll(".cancel").forEach(b=>b.onclick=async()=>{
+  const id=b.dataset.id;
+  const reason=prompt("取消理由を入力してください。");
+  if(reason===null)return;
+
+  if(!reason.trim()){
+    alert("取消理由を入力してください。");
+    return;
+  }
+
+  if(!confirm("この打刻を取り消しますか？"))return;
+
+  const r=await sb.from("attendance_records").update({
+    status:"cancelled",
+    cancelled_at:new Date().toISOString(),
+    cancelled_by:user?.id||null,
+    cancel_reason:reason.trim()
+  }).eq("id",id);
+
+  if(r.error)alert(r.error.message);
+  else loadAdmin();
+});
 function downloadCSV(){
   const rows=[...document.querySelectorAll("#tbl tr")].map(r=>[...r.querySelectorAll("th,td")].slice(0,5).map(x=>`"${x.innerText.replaceAll('"','""')}"`).join(","));
   const a=document.createElement("a");
