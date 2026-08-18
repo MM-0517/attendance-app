@@ -116,8 +116,8 @@ async function loadAdmin(){
       return `<tr>
         <td><b>${esc(x.profiles?.name)}</b></td>
         <td><input class="editloc" data-id="${x.id}" maxlength="100" value="${esc(x.work_location||"")}" aria-label="勤務場所"></td>
-        <td><input class="editin" data-id="${x.id}" value="${x.clock_in?new Date(x.clock_in).toISOString().slice(11,16):""}" aria-label="出勤時刻"></td>
-        <td><input class="editout" data-id="${x.id}" value="${x.clock_out?new Date(x.clock_out).toISOString().slice(11,16):""}" aria-label="退勤時刻"></td>
+        <td><input class="editin" data-id="${x.id}" value="${x.clock_in?new Date(x.clock_in).toLocaleTimeString('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}):""}" aria-label="出勤時刻"></td>
+        <td><input class="editout" data-id="${x.id}" value="${x.clock_out?new Date(x.clock_out).toLocaleTimeString('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}):""}" aria-label="退勤時刻"></td>
         <td>${hm(mins(x.clock_in,x.clock_out,b))}</td>
         <td>${gpsCell(x.clock_in_latitude,x.clock_in_longitude,x.clock_in_accuracy)}</td>
         <td>${gpsCell(x.clock_out_latitude,x.clock_out_longitude,x.clock_out_accuracy)}</td>
