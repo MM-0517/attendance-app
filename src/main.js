@@ -135,7 +135,7 @@ async function loadAdmin(){
     const r=await sb.from("attendance_records").update({clock_in,clock_out,work_location:lv||null}).eq("id",id);
     if(r.error)alert(r.error.message);else loadAdmin();
   });
-
+}
 
 document.querySelectorAll(".cancel").forEach(b=>b.onclick=async()=>{
   const id=b.dataset.id;
