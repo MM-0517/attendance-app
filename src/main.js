@@ -122,7 +122,7 @@ async function loadAdmin(){
         <td>${gpsCell(x.clock_in_latitude,x.clock_in_longitude,x.clock_in_accuracy)}</td>
         <td>${gpsCell(x.clock_out_latitude,x.clock_out_longitude,x.clock_out_accuracy)}</td>
         <td><button class="save gray small" data-id="${x.id}">保存</button></td><button class="cancel gray small" data-id="${x.id}">取消</button>
-    }).join("")||`<tr><td colspan="8">該当する勤怠データがありません。</td></tr>'}
+}).join("")||'<tr><td colspan="8">該当する勤怠データがありません。</td></tr>'}
   </table></div>`;
   document.querySelectorAll(".save").forEach(b=>b.onclick=async()=>{
     const id=b.dataset.id;
