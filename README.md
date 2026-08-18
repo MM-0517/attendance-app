@@ -12,7 +12,7 @@
 - 日別CSV出力
 - 出勤・退勤時のGPS位置情報取得
 - GPSの緯度・経度・取得精度を保存
-- 管理者画面から位置情報を確認し、Google Mapsで表示
+- 管理者画面から位置情報を確認し、OpenStreetMapで表示（APIキー不要）
 - RLS
 
 ## 公開手順
@@ -36,7 +36,7 @@ Supabaseのブラウザ側にはPublishable/Anon keyを使い、service_role key
 - HTTPS環境（Vercelの公開URLなど）で動作させてください。
 - 利用者がブラウザの位置情報許可をONにする必要があります。
 - 保存項目は緯度・経度・取得時の推定精度です。
-- 管理画面では座標をクリックしてGoogle Mapsで確認できます。
+- 管理画面では座標をクリックしてOpenStreetMapで確認できます。
 - 会社から一定距離以内だけ打刻可能にする「ジオフェンス」は今回の版ではまだ有効化していません。
 - 本番運用では、位置情報の利用目的、保存期間、閲覧権限などを社内ルール/プライバシーポリシーで明確にしてください。
 
@@ -50,3 +50,4 @@ alter table public.attendance_records
   add column if not exists clock_out_latitude double precision,
   add column if not exists clock_out_longitude double precision,
   add column if not exists clock_out_accuracy double precision;
+\n\n## 勤務場所入力\n出勤時に「勤務場所」を入力し、勤怠レコードの `work_location` に保存します。既存のSupabaseプロジェクトでは `supabase/migration_work_location.sql` をSQL Editorで一度実行してください。\n
